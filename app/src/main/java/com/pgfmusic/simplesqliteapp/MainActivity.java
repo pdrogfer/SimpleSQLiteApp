@@ -1,29 +1,49 @@
 package com.pgfmusic.simplesqliteapp;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tv_name, tv_passw;
-    Button btn_guardar;
+    EditText et_name,et_passw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tv_name = (TextView) findViewById(R.id.tv_name);
-        TextView tv_passw = (TextView) findViewById(R.id.tv_passw);
+        et_name = (EditText) findViewById(R.id.et_name);
+        et_passw = (EditText) findViewById(R.id.et_passw);
 
     }
 
-    private void Guardar(View v) {
-        String name = tv_name.getText().toString();
-        String password = tv_passw.getText().toString();
+    // fired by button GuardarDatos
+    public void GuardarDatos(View v) {
+        String name = et_name.getText().toString();
+        String password = et_passw.getText().toString();
 
+        MyDBHelper myDBHelper = new MyDBHelper(this, "MY_DATABASE", null, 1);
+        SQLiteDatabase db = myDBHelper.getWritableDatabase();
+        if (db != null) {
+            ContentValues registroNuevo = new ContentValues();
+            registroNuevo.put("Name", name);
+            registroNuevo.put("Password", password);
+            Long i = db.insert("Usuarios", null, registroNuevo);
+            if (i > 0) {
+                Toast.makeText(this, "Registro insertado", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void MostrarListado(View v) {
+        startActivity(new Intent(this, MostrarListado.class));
     }
 }

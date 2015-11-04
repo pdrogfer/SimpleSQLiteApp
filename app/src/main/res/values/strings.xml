@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleSQLiteApp</string>
+    <string name="title_activity_mostrar_listado">MostrarListado</string>
 </resources>
