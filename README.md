@@ -1,4 +1,4 @@
-# simple-sqlite-android-app
+# Simple SQLite Android app
 Sample project to demostrate SQLite implementation in android
 
 ### Description
